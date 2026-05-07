@@ -1,7 +1,7 @@
 #include <Servo.h>
 #include <NewPing.h>
 
-// Define constants
+
 const int IN1 = 8;
 const int IN2 = 9;
 const int SERVO_PIN_DIR = 10;
@@ -18,7 +18,7 @@ Servo servo_dir;
 Servo servo_speed;
 NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
 
-// Define variables
+
 int speed = 0;
 float distance;
 
@@ -59,30 +59,25 @@ void autoParking() {
 }
 
 void setup() {
-  // Initialize motor control pins
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
   pinMode(13, OUTPUT);
   pinMode(R_S, INPUT);
   pinMode(L_S, INPUT);
 
-  // Attach servo to pin 10 and 11
   servo_dir.attach(SERVO_PIN_DIR);
   servo_speed.attach(SERVO_PIN_SPEED);
   digitalWrite(13, HIGH);
 
   Serial.begin(9600);
-  // bluetoothSerial.begin(9600);
 }
 
 void loop() {
-  // Check if there is any data available on the Bluetooth module
   if (Serial.available()) {
     char command = Serial.read();
     stopMotor();
     servo_dir.write(95);
     servo_speed.write(speed);
-    // Check the command received
     switch (command) {
       case 'F':
         forward();
